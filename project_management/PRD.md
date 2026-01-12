@@ -1,9 +1,9 @@
 # Product Requirements Document (PRD)
 
-## Tea Shop E-Commerce Platform
+## Eerie Tea E-Commerce Platform
 
 **Version:** 1.0  
-**Date:** 2024  
+**Date:** 2026 Jan
 **Status:** Draft
 
 ---
@@ -219,41 +219,62 @@ Create a modern, user-friendly e-commerce platform that allows customers to brow
 
 ## 5. Technical Considerations
 
-### 5.1 Technology Stack (Recommendations)
+### 5.1 Technology Stack (Finalized)
+
+**See `TECH_STACK.md` for detailed version information and rationale.**
 
 #### Frontend
 
-- **Framework:** React, Vue.js, or Next.js (for SSR/SEO)
-- **Styling:** Tailwind CSS or styled-components
-- **State Management:** Redux, Zustand, or React Context
-- **Forms:** React Hook Form or Formik
-- **UI Components:** Material-UI, Chakra UI, or custom components
+- **Framework:** Next.js 16.1.1 (App Router)
+- **Language:** TypeScript 5.9.2+
+- **Styling:** Tailwind CSS 4.1.13+
+- **UI Components:** shadcn/ui 3.3.1+ (built on Radix UI)
+- **State Management:** Zustand 5.0.0+ (client state), TanStack Query 5.0.0+ (server state)
+- **Forms:** React Hook Form 7.54.0+ with Zod 3.24.1+ validation
+- **Icons:** Lucide React
 
 #### Backend
 
-- **Runtime:** Node.js (Express/NestJS) or Python (Django/FastAPI)
-- **Database:** PostgreSQL (primary), Redis (caching)
-- **ORM:** Prisma, TypeORM, or Sequelize (Node.js) / Django ORM (Python)
+- **Runtime:** Node.js 20.9+ (Next.js API Routes)
+- **Database:** PostgreSQL (latest stable)
+- **ORM:** Prisma 6.0.0+
+- **Caching:** Redis (optional for MVP, via Upstash if needed)
 
-#### E-Commerce Platform Options
+#### Authentication
 
-- **Custom Build:** Full control, more development time
-- **Headless Commerce:** Shopify Plus, Commerce.js, Medusa.js
-- **E-Commerce Framework:** WooCommerce (WordPress), Magento, or custom
+- **NextAuth.js (Auth.js):** 5.0.0+ (recommended)
+- Alternative: Clerk (if more features needed)
 
 #### Payment Processing
 
-- **Stripe** (recommended for most use cases)
-- **PayPal**
-- **Square**
-- Ensure PCI compliance
+- **Stripe:** 17.0.0+ (primary payment gateway)
+- **PayPal:** (Phase 2 enhancement)
+- PCI compliance handled by Stripe
+
+#### Email Service
+
+- **Resend:** 4.0.0+ with React Email 0.0.25+
+- Alternative: SendGrid or AWS SES
 
 #### Hosting & Infrastructure
 
-- **Frontend:** Vercel, Netlify, or AWS S3 + CloudFront
-- **Backend:** AWS, Google Cloud, or DigitalOcean
-- **Database:** Managed PostgreSQL (AWS RDS, Supabase, or Railway)
-- **CDN:** Cloudflare or AWS CloudFront
+- **Frontend & Backend:** Vercel (recommended - zero-config Next.js deployment)
+- **Database:** Supabase (recommended for portfolio), Railway, or Vercel Postgres
+- **CDN:** Vercel Edge Network (included)
+
+#### Testing
+
+- **Unit/Integration:** Vitest 2.1.0+ with React Testing Library 16.0.0+
+- **E2E:** Playwright 1.48.0+
+
+#### Code Quality
+
+- **Linting:** ESLint 9.0.0+ (Next.js config)
+- **Formatting:** Biome 1.9.0+ (recommended) or Prettier 3.3.0+
+
+#### Package Manager
+
+- **pnpm:** 9.0.0+ (recommended for speed and efficiency)
 
 ### 5.2 Key Technical Requirements
 
