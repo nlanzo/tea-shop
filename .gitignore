@@ -24,6 +24,9 @@ backend/**/appsettings.Development.json
 backend/**/appsettings.Production.json
 backend/**/appsettings.Local.json
 backend/**/Data/Migrations/
+**/Properties/launchSettings.json
+**/appsettings.Development.json
+**/appsettings.Local.json
 
 # IDE
 .vscode/
@@ -53,3 +56,5 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+TASK_1.2_GUIDE.md
+project_management/USER_SECRETS_GUIDE.md

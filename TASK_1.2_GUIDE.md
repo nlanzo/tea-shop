@@ -216,11 +216,13 @@ Or use SQL Server Management Studio (SSMS) or Azure Data Studio to create it.
 
 ---
 
-## Step 5: Configure Connection String
+## Step 5: Configure Connection String (SECURE)
 
-### 5.1 Update appsettings.json
+**⚠️ IMPORTANT:** Never commit connection strings with passwords to Git! We'll use .NET User Secrets for local development.
 
-Edit `backend/src/EerieTea.Api/appsettings.json`:
+### 5.1 Update appsettings.json (Safe to Commit)
+
+Edit `backend/src/EerieTea.Api/appsettings.json` with a **placeholder** connection string:
 
 ```json
 {
@@ -232,16 +234,18 @@ Edit `backend/src/EerieTea.Api/appsettings.json`:
   },
   "AllowedHosts": "*",
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=EerieTeaDb;User Id=sa;Password=YourPassword;TrustServerCertificate=True;"
+    "DefaultConnection": "Server=localhost;Database=EerieTeaDb;User Id=sa;Password=CHANGE_ME;TrustServerCertificate=True;"
   }
 }
 ```
 
-**Connection String Format:**
+**Note:** This is just a placeholder. The actual connection string will come from User Secrets (see below).
+
+**Connection String Format (for reference):**
 - `Server=localhost`: SQL Server instance
 - `Database=EerieTeaDb`: Database name
 - `User Id=sa`: SQL Server username
-- `Password=YourPassword`: SQL Server password
+- `Password=YourPassword`: SQL Server password (use User Secrets!)
 - `TrustServerCertificate=True`: Required for local development
 
 **For LocalDB (Windows):**
@@ -249,9 +253,41 @@ Edit `backend/src/EerieTea.Api/appsettings.json`:
 Server=(localdb)\\mssqllocaldb;Database=EerieTeaDb;Trusted_Connection=True;TrustServerCertificate=True;
 ```
 
-### 5.2 Create appsettings.Development.json
+### 5.2 Set Up .NET User Secrets (Local Development)
 
-Create `backend/src/EerieTea.Api/appsettings.Development.json`:
+User Secrets stores sensitive data outside your project directory and is **never committed to Git**.
+
+**Initialize User Secrets:**
+```bash
+cd backend/src/EerieTea.Api
+dotnet user-secrets init
+```
+
+**Set your connection string:**
+```bash
+# For SQL Server with username/password
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost;Database=EerieTeaDb;User Id=sa;Password=YourActualPassword;TrustServerCertificate=True;"
+
+# OR for LocalDB (Windows)
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=(localdb)\\mssqllocaldb;Database=EerieTeaDb;Trusted_Connection=True;TrustServerCertificate=True;"
+```
+
+**What this does:**
+- Stores the connection string in your user profile (not in the project)
+- Automatically loads in Development environment
+- Never gets committed to Git
+- Overrides values in `appsettings.json`
+
+**Verify it's set:**
+```bash
+dotnet user-secrets list
+```
+
+You should see your connection string listed.
+
+### 5.3 Create appsettings.Development.json (Optional)
+
+Create `backend/src/EerieTea.Api/appsettings.Development.json` for development-specific settings:
 
 ```json
 {
@@ -261,14 +297,33 @@ Create `backend/src/EerieTea.Api/appsettings.Development.json`:
       "Microsoft.AspNetCore": "Warning",
       "Microsoft.EntityFrameworkCore": "Information"
     }
-  },
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=EerieTeaDb;User Id=sa;Password=YourPassword;TrustServerCertificate=True;"
   }
 }
 ```
 
-**Note:** Add `appsettings.Development.json` to `.gitignore` (it should already be there).
+**Note:** Don't put connection strings here either! Use User Secrets. This file can be gitignored or committed (it's safe without secrets).
+
+### 5.4 Verify .gitignore
+
+Make sure these are in `.gitignore`:
+
+```
+# User Secrets (stored in user profile, but good to be explicit)
+**/Properties/launchSettings.json
+
+# Development settings (optional - can commit if no secrets)
+**/appsettings.Development.json
+**/appsettings.Local.json
+```
+
+**What gets committed:**
+- ✅ `appsettings.json` (with placeholder)
+- ✅ `appsettings.Production.json` (if you create one, with placeholders)
+
+**What NEVER gets committed:**
+- ❌ User Secrets (stored outside project)
+- ❌ `appsettings.Development.json` (if it contains secrets)
+- ❌ Any file with real passwords
 
 ---
 
@@ -321,11 +376,19 @@ dotnet add src/EerieTea.Tests/EerieTea.Tests.csproj package Microsoft.AspNetCore
 cd ../frontend
 
 # Install Vitest and testing libraries
-pnpm add -D vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event
+pnpm add -D vitest @vitejs/plugin-react @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom
 
 # Install Playwright for E2E testing
 pnpm add -D @playwright/test
 ```
+
+**What these packages do:**
+- `vitest`: Test runner
+- `@vitejs/plugin-react`: Enables Vitest to work with React/JSX
+- `@testing-library/react`: Utilities for testing React components
+- `@testing-library/jest-dom`: Additional matchers for DOM testing
+- `@testing-library/user-event`: Simulate user interactions
+- `jsdom`: DOM environment for tests (needed for `environment: 'jsdom'`)
 
 ### 7.3 Configure Vitest
 
@@ -364,7 +427,32 @@ cd frontend
 npx playwright install
 ```
 
-This will create `playwright.config.ts` automatically.
+This downloads the browser binaries (Chromium, Firefox, WebKit).
+
+**Install System Dependencies (Linux/WSL):**
+
+After installing browsers, you may see a warning about missing system dependencies. Install them:
+
+```bash
+# Option 1: Use Playwright's automatic installer (recommended)
+sudo npx playwright install-deps
+
+# Option 2: Manual install (if you prefer)
+sudo apt-get update
+sudo apt-get install libasound2t64 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcups2 libdbus-1-3 libdrm2 libgbm1 libgtk-3-0 libnspr4 libnss3 libwayland-client0 libxcomposite1 libxdamage1 libxfixes3 libxkbcommon0 libxrandr2 libxss1 libxtst6
+```
+
+**What this does:**
+- Installs system libraries needed for browsers to run
+- Required for E2E tests to execute
+- Only needed once per system
+
+**Verify installation:**
+```bash
+npx playwright test --version
+```
+
+This will create `playwright.config.ts` automatically when you run your first test.
 
 ---
 
