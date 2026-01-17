@@ -11,23 +11,50 @@
 
 - **Next.js:** `16.1.1` ✅ (Specified)
   - App Router (recommended for new projects)
-  - Built-in API Routes for backend functionality
-  - Server Components and Server Actions
+  - Client-side rendering (consumes .NET API)
+  - Server Components for SEO
   - Built-in image optimization
   - Turbopack (default bundler)
 
-### Programming Language
+### Backend Framework
 
-- **TypeScript:** `^5.9.2`
+- **.NET:** `10.0` (LTS) or latest stable
+
+  - Cross-platform runtime
+  - High performance
+  - Strong typing with C#
+  - Excellent for API development
+
+- **ASP.NET Core:** `10.0` (matches .NET version)
+  - Web API framework
+  - RESTful API endpoints
+  - Built-in dependency injection
+  - Middleware pipeline
+  - Swagger/OpenAPI support
+
+### Programming Languages
+
+- **TypeScript:** `^5.9.2` (Frontend)
+
   - Static typing for better code quality
   - Required for Next.js 16 (TypeScript 5.1+)
-  - Full type safety across the stack
+  - Full type safety on frontend
+
+- **C#:** `12.0` (Backend)
+  - Strongly typed language
+  - Excellent tooling and IDE support
+  - Modern language features
 
 ### Runtime
 
-- **Node.js:** `^20.9.0` or higher
+- **Node.js:** `^20.9.0` or higher (Frontend)
+
   - Required by Next.js 16
   - LTS version recommended for stability
+
+- **.NET Runtime:** `10.0` (Backend)
+  - Cross-platform (.NET runtime)
+  - Can run on Windows, Linux, macOS
 
 ---
 
@@ -106,15 +133,24 @@
   - Robust relational database
   - ACID compliance
   - Excellent for e-commerce data
+  - Works well with Entity Framework Core
 
 ### ORM
 
-- **Prisma:** `^6.0.0` (or latest stable)
-  - Type-safe database client
-  - Excellent TypeScript support
-  - Migration system
-  - Great developer experience
-  - Prisma Studio for database management
+- **Entity Framework Core:** `10.0.x` (matches .NET version)
+  - Official .NET ORM
+  - Code-first migrations
+  - LINQ support
+  - Change tracking
+  - Excellent C# integration
+  - Database provider flexibility
+
+**Alternative (if needed):**
+
+- **Dapper:** Latest stable
+  - Lightweight micro-ORM
+  - Faster for simple queries
+  - Can be used alongside EF Core
 
 ### Database Hosting Options
 
@@ -141,19 +177,35 @@
 
 ## Authentication
 
-### Authentication Library
+### Backend Authentication
 
-- **NextAuth.js (Auth.js):** `^5.0.0` (or latest stable)
-  - Built for Next.js
-  - Supports multiple providers
-  - Session management
-  - JWT and database sessions
-  - TypeScript support
+- **ASP.NET Core Identity:** Built into ASP.NET Core
 
-**Alternative (if you want more features):**
+  - User management and authentication
+  - Password hashing
+  - Role-based authorization
+  - Token generation (JWT)
+  - Email confirmation
+  - Password reset functionality
 
-- **Clerk:** Latest stable version
-  - More features out of the box
+- **JWT Bearer Authentication:** `Microsoft.AspNetCore.Authentication.JwtBearer`
+  - JWT token validation
+  - Stateless authentication
+  - Works with frontend SPA
+  - Secure token handling
+
+### Frontend Authentication
+
+- **Custom Auth Implementation:** Using React Context/Zustand
+  - Store JWT tokens securely
+  - Handle login/logout
+  - Token refresh logic
+  - Protected routes
+
+**Alternative:**
+
+- **Auth0** or **Clerk:** Latest stable version
+  - Third-party authentication service
   - Pre-built UI components
   - User management dashboard
   - May have costs for production
@@ -164,18 +216,27 @@
 
 ### Payment Gateway
 
-- **Stripe:** `^17.0.0` (or latest stable)
+- **Stripe:** Latest stable
   - Industry standard
-  - Excellent Next.js integration
   - Comprehensive documentation
   - Test mode for development
   - PCI compliant
 
 ### Stripe Integration Libraries
 
+**Backend (.NET):**
+
+- **Stripe.net:** Latest stable
+  - Official .NET SDK for Stripe
+  - Server-side payment processing
+  - Webhook handling
+
+**Frontend (Next.js):**
+
 - **@stripe/stripe-js:** Latest stable
 - **@stripe/react-stripe-js:** Latest stable
-- **stripe:** Latest stable (server-side)
+  - Client-side Stripe Elements
+  - Payment form components
 
 **Note:** PayPal can be added later if needed (Phase 2)
 
@@ -185,41 +246,70 @@
 
 ### Email Provider
 
-- **Resend:** `^4.0.0` (or latest stable) ⭐ Recommended
+- **Resend:** Latest stable (Recommended)
   - Developer-friendly API
   - Great for transactional emails
-  - React Email support
   - Good free tier
+  - .NET SDK available
 
 **Alternatives:**
 
 - **SendGrid:** Latest stable
   - More established
   - Higher free tier limits
-- **AWS SES:** Via AWS SDK
+  - Official .NET SDK
+- **AWS SES:** Via AWS SDK for .NET
   - Cost-effective at scale
   - More setup required
+- **MailKit:** Latest stable
+  - Open-source .NET email library
+  - Works with SMTP servers
 
 ### Email Templates
 
-- **React Email:** `^0.0.25` (or latest stable)
+- **Razor Email Templates:** Built into ASP.NET Core
+  - Server-side email rendering
+  - C# templating engine
+  - Can use Razor views for emails
+
+**Alternative:**
+
+- **React Email:** Latest stable
   - Build emails with React components
-  - Works great with Resend
-  - TypeScript support
+  - Can be rendered server-side
+  - Works with Resend
 
 ---
 
 ## Testing
 
-### Unit & Integration Testing
+### Backend Testing (.NET)
+
+- **xUnit:** Latest stable (Recommended)
+
+  - .NET testing framework
+  - Clean, simple API
+  - Great tooling support
+
+- **Moq:** Latest stable
+
+  - Mocking framework for .NET
+  - Easy to use
+  - Type-safe mocks
+
+- **FluentAssertions:** Latest stable
+  - Fluent assertion library
+  - Readable test assertions
+  - Better error messages
+
+### Frontend Testing
 
 - **Vitest:** `^2.1.0` (or latest stable)
+
   - Fast test runner
   - Vite-powered
   - Jest-compatible API
   - Great TypeScript support
-
-### Component Testing
 
 - **React Testing Library:** `^16.0.0` (or latest stable)
   - Test components from user perspective
@@ -231,7 +321,7 @@
   - Modern E2E testing
   - Cross-browser testing
   - Great debugging tools
-  - Better than Cypress for Next.js
+  - Tests both frontend and backend integration
 
 ---
 
@@ -283,13 +373,12 @@
 
 ## Deployment & Hosting
 
-### Frontend & Backend Hosting
+### Frontend Hosting
 
-- **Vercel:** ⭐ Recommended
+- **Vercel:** Recommended
   - Created by Next.js team
   - Zero-config deployment
   - Automatic HTTPS
-  - Edge functions
   - Great free tier for portfolio projects
   - Preview deployments for PRs
 
@@ -298,15 +387,35 @@
 - **Netlify:** Good alternative
 - **AWS Amplify:** If you prefer AWS ecosystem
 
+### Backend Hosting
+
+- **Azure App Service:** Recommended for .NET
+  - Native .NET support
+  - Easy deployment
+  - Auto-scaling
+  - Good free tier
+
+**Alternatives:**
+
+- **AWS Elastic Beanstalk:** Good .NET support
+- **Railway:** Simple deployment
+- **DigitalOcean App Platform:** Good pricing
+- **Docker Containers:** Deploy anywhere (Azure Container Apps, AWS ECS, etc.)
+
 ### Database Hosting
 
-- **Supabase** (recommended)
-- **Railway**
-- **Vercel Postgres** (if using Vercel)
+- **Supabase:** Recommended
+  - Free tier available
+  - Managed PostgreSQL
+  - Good for portfolio projects
+- **Azure Database for PostgreSQL:** If using Azure
+- **Railway:** Simple PostgreSQL hosting
+- **AWS RDS:** If using AWS
 
 ### CDN
 
-- **Vercel Edge Network** (included with Vercel)
+- **Vercel Edge Network** (included with Vercel for frontend)
+- **Azure CDN** (if using Azure)
 - **Cloudflare** (if using custom domain)
 
 ---
@@ -383,58 +492,108 @@
 
 ```
 eerie-tea/
-├── app/                    # Next.js App Router
-│   ├── (auth)/            # Auth routes
-│   ├── (shop)/            # Shop routes
-│   ├── admin/             # Admin routes
-│   ├── api/               # API routes
-│   └── layout.tsx         # Root layout
-├── components/            # React components
-│   ├── ui/                # shadcn/ui components
-│   ├── cart/              # Cart components
-│   ├── products/          # Product components
-│   └── ...
-├── lib/                   # Utility functions
-│   ├── db/                # Database client (Prisma)
-│   ├── auth/              # Auth configuration
-│   ├── stripe/            # Stripe utilities
-│   └── utils/             # Helper functions
-├── hooks/                 # Custom React hooks
-├── types/                 # TypeScript types
-├── public/                # Static assets
-├── prisma/                # Prisma schema and migrations
-├── .env.local             # Environment variables (gitignored)
-└── package.json
+├── frontend/              # Next.js frontend application
+│   ├── app/              # Next.js App Router
+│   │   ├── (auth)/      # Auth routes
+│   │   ├── (shop)/      # Shop routes
+│   │   ├── admin/       # Admin routes
+│   │   └── layout.tsx   # Root layout
+│   ├── components/       # React components
+│   │   ├── ui/          # shadcn/ui components
+│   │   ├── cart/        # Cart components
+│   │   └── products/    # Product components
+│   ├── lib/             # Utility functions
+│   │   ├── api/         # API client functions
+│   │   ├── auth/        # Auth utilities
+│   │   └── utils/       # Helper functions
+│   ├── hooks/           # Custom React hooks
+│   ├── types/           # TypeScript types
+│   ├── public/          # Static assets
+│   └── package.json
+│
+├── backend/             # .NET backend API
+│   ├── EerieTea.Api/    # Web API project
+│   │   ├── Controllers/ # API controllers
+│   │   ├── Models/      # Data models/DTOs
+│   │   ├── Services/    # Business logic services
+│   │   ├── Data/        # DbContext and repositories
+│   │   ├── Middleware/  # Custom middleware
+│   │   └── Program.cs   # Application entry point
+│   ├── EerieTea.Core/   # Core domain models
+│   ├── EerieTea.Infrastructure/ # Infrastructure (EF Core, etc.)
+│   └── EerieTea.Tests/  # Unit and integration tests
+│
+└── project_management/  # Project documentation
+    ├── PRD.md
+    ├── TECH_STACK.md
+    └── PROJECT_TASKS.md
 ```
 
 ---
 
 ## Installation Commands
 
-### Initial Setup
+### Backend Setup (.NET)
+
+```bash
+# Create solution
+dotnet new sln -n EerieTea
+
+# Create Web API project
+dotnet new webapi -n EerieTea.Api -f net10.0
+
+# Create class library projects
+dotnet new classlib -n EerieTea.Core -f net10.0
+dotnet new classlib -n EerieTea.Infrastructure -f net10.0
+dotnet new xunit -n EerieTea.Tests -f net10.0
+
+# Add projects to solution
+dotnet sln add EerieTea.Api/EerieTea.Api.csproj
+dotnet sln add EerieTea.Core/EerieTea.Core.csproj
+dotnet sln add EerieTea.Infrastructure/EerieTea.Infrastructure.csproj
+dotnet sln add EerieTea.Tests/EerieTea.Tests.csproj
+
+# Add NuGet packages
+cd EerieTea.Api
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package Stripe.net
+dotnet add package Swashbuckle.AspNetCore
+
+cd ../EerieTea.Infrastructure
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+cd ../EerieTea.Tests
+dotnet add package xunit
+dotnet add package Moq
+dotnet add package FluentAssertions
+dotnet add package Microsoft.AspNetCore.Mvc.Testing
+```
+
+### Frontend Setup (Next.js)
 
 ```bash
 # Create Next.js project with TypeScript
-npx create-next-app@16.1.1 eerie-tea --typescript --tailwind --app --use-pnpm
+npx create-next-app@16.1.1 frontend --typescript --tailwind --app --use-pnpm
+
+cd frontend
 
 # Install core dependencies
 pnpm add zustand react-hook-form zod @hookform/resolvers
-pnpm add @prisma/client
-pnpm add next-auth@beta  # or latest stable
-pnpm add stripe @stripe/stripe-js @stripe/react-stripe-js
-pnpm add resend react-email
+pnpm add @stripe/stripe-js @stripe/react-stripe-js
 pnpm add date-fns
+pnpm add axios  # For API calls to .NET backend
 
 # Install dev dependencies
-pnpm add -D prisma
 pnpm add -D vitest @testing-library/react @testing-library/jest-dom
 pnpm add -D @playwright/test
-pnpm add -D @biomejs/biome  # or prettier eslint-config-prettier
+pnpm add -D @biomejs/biome
 
-# Initialize Prisma
-npx prisma init
-
-# Initialize shadcn/ui (after project setup)
+# Initialize shadcn/ui
 npx shadcn@latest init
 ```
 
@@ -448,10 +607,17 @@ npx shadcn@latest init
   - TypeScript 5.1+
   - React 19+ (comes with Next.js)
 
-- **Prisma** works with:
+- **.NET 10.0** requires:
+
+  - .NET SDK 10.0+
+  - Can run on Windows, Linux, macOS
+  - Visual Studio 2022 or VS Code recommended
+
+- **Entity Framework Core 10.0** works with:
 
   - PostgreSQL 12+
-  - Node.js 18+
+  - SQL Server 2012+
+  - MySQL 5.7+
 
 - **shadcn/ui** requires:
   - React 18+
@@ -467,13 +633,15 @@ npx shadcn@latest init
 - Better for smaller to medium applications
 - Sufficient for e-commerce state needs
 
-### Why Prisma over TypeORM/Drizzle?
+### Why Entity Framework Core over Prisma/Dapper?
 
-- Best TypeScript support
-- Excellent developer experience
-- Great migration system
-- Prisma Studio for database management
-- Well-documented
+- Native .NET integration
+- Official Microsoft ORM
+- Excellent LINQ support
+- Code-first migrations
+- Strong typing with C#
+- Well-documented and widely used
+- Great tooling support (Visual Studio, Rider)
 
 ### Why shadcn/ui over Material-UI/Chakra?
 
@@ -490,12 +658,22 @@ npx shadcn@latest init
 - Simpler API
 - Good for portfolio projects
 
-### Why Vitest over Jest?
+### Why .NET Backend?
 
-- Faster (Vite-powered)
-- Better ESM support
-- Jest-compatible API
-- Great TypeScript support
+- High performance and scalability
+- Strong typing with C#
+- Excellent tooling and IDE support
+- Built-in dependency injection
+- Comprehensive framework (auth, validation, etc.)
+- Cross-platform deployment
+- Great for API development
+
+### Why xUnit over NUnit/MSTest?
+
+- Clean, simple API
+- Better async/await support
+- Great tooling integration
+- Modern testing patterns
 
 ---
 

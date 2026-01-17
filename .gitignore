@@ -1,0 +1,55 @@
+# Root .gitignore for Eerie Tea Project
+
+# Frontend (Next.js)
+frontend/.next/
+frontend/.env.local
+frontend/.env*.local
+frontend/node_modules/
+frontend/.pnpm-store/
+frontend/dist/
+frontend/build/
+frontend/.turbo/
+frontend/.vercel/
+
+# Backend (.NET)
+backend/**/bin/
+backend/**/obj/
+backend/**/.vs/
+backend/**/.vscode/
+backend/**/.idea/
+backend/**/*.user
+backend/**/*.suo
+backend/**/*.cache
+backend/**/appsettings.Development.json
+backend/**/appsettings.Production.json
+backend/**/appsettings.Local.json
+backend/**/Data/Migrations/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# Test coverage
+coverage/
+*.coverage
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp

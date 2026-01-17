@@ -1,0 +1,6 @@
+@EerieTea.Api_HostAddress = http://localhost:5118
+
+GET {{EerieTea.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

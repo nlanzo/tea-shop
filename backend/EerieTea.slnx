@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/EerieTea.Api/EerieTea.Api.csproj" />
+    <Project Path="src/EerieTea.Core/EerieTea.Core.csproj" />
+    <Project Path="src/EerieTea.Infrastructure/EerieTea.Infrastructure.csproj" />
+    <Project Path="src/EerieTea.Tests/EerieTea.Tests.csproj" />
+  </Folder>
+</Solution>

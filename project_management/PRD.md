@@ -232,18 +232,22 @@ Create a modern, user-friendly e-commerce platform that allows customers to brow
 - **State Management:** Zustand 5.0.0+ (client state), TanStack Query 5.0.0+ (server state)
 - **Forms:** React Hook Form 7.54.0+ with Zod 3.24.1+ validation
 - **Icons:** Lucide React
+- **API Client:** Axios or Fetch API (for .NET backend calls)
 
 #### Backend
 
-- **Runtime:** Node.js 20.9+ (Next.js API Routes)
+- **Framework:** .NET 10.0 (LTS) with ASP.NET Core
+- **Language:** C# 12.0
 - **Database:** PostgreSQL (latest stable)
-- **ORM:** Prisma 6.0.0+
+- **ORM:** Entity Framework Core 10.0+
+- **API:** RESTful Web API with Swagger/OpenAPI
 - **Caching:** Redis (optional for MVP, via Upstash if needed)
 
 #### Authentication
 
-- **NextAuth.js (Auth.js):** 5.0.0+ (recommended)
-- Alternative: Clerk (if more features needed)
+- **Backend:** ASP.NET Core Identity with JWT Bearer Authentication
+- **Frontend:** Custom implementation with React Context/Zustand
+- Alternative: Auth0 or Clerk (if more features needed)
 
 #### Payment Processing
 
@@ -258,13 +262,15 @@ Create a modern, user-friendly e-commerce platform that allows customers to brow
 
 #### Hosting & Infrastructure
 
-- **Frontend & Backend:** Vercel (recommended - zero-config Next.js deployment)
-- **Database:** Supabase (recommended for portfolio), Railway, or Vercel Postgres
-- **CDN:** Vercel Edge Network (included)
+- **Frontend:** Vercel (recommended - zero-config Next.js deployment)
+- **Backend:** Azure App Service (recommended for .NET), AWS Elastic Beanstalk, Railway, or Docker containers
+- **Database:** Supabase (recommended for portfolio), Azure Database for PostgreSQL, Railway, or AWS RDS
+- **CDN:** Vercel Edge Network (frontend), Azure CDN (if using Azure)
 
 #### Testing
 
-- **Unit/Integration:** Vitest 2.1.0+ with React Testing Library 16.0.0+
+- **Backend:** xUnit with Moq and FluentAssertions
+- **Frontend:** Vitest 2.1.0+ with React Testing Library 16.0.0+
 - **E2E:** Playwright 1.48.0+
 
 #### Code Quality

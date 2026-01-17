@@ -8,16 +8,30 @@ Eerie Tea is an e-commerce platform designed specifically for tea enthusiasts, f
 
 ## Tech Stack
 
+**Frontend:**
+
 - **Framework:** Next.js 16.1.1 (App Router)
 - **Language:** TypeScript 5.9+
-- **Database:** PostgreSQL with Prisma ORM
 - **Styling:** Tailwind CSS 4.1+ with shadcn/ui components
 - **State Management:** Zustand
 - **Forms:** React Hook Form + Zod validation
-- **Authentication:** NextAuth.js (Auth.js)
-- **Payments:** Stripe
-- **Email:** Resend + React Email
-- **Hosting:** Vercel + Supabase
+- **API Client:** Axios or Fetch API
+
+**Backend:**
+
+- **Framework:** .NET 10.0 with ASP.NET Core
+- **Language:** C# 12.0
+- **Database:** PostgreSQL with Entity Framework Core
+- **Authentication:** ASP.NET Core Identity with JWT
+- **Payments:** Stripe.net
+- **Email:** Resend with Razor templates
+- **API Documentation:** Swagger/OpenAPI
+
+**Hosting:**
+
+- **Frontend:** Vercel
+- **Backend:** Azure App Service
+- **Database:** Supabase
 
 ## Project Status
 
@@ -63,28 +77,47 @@ eerie-tea/
 
 ### Prerequisites
 
+- .NET SDK 10.0+
 - Node.js 20.9+
 - pnpm (recommended) or npm
 - PostgreSQL database (or Supabase account)
 
 ### Installation
 
+**Backend Setup:**
+
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd eerie-tea
+# Navigate to backend directory
+cd backend
+
+# Restore NuGet packages
+dotnet restore
+
+# Set up database connection in appsettings.json
+# Run migrations
+dotnet ef database update
+
+# Seed database
+dotnet run --project EerieTea.Api
+
+# Run backend API
+dotnet run --project EerieTea.Api
+```
+
+Backend API will run at [http://localhost:5000](http://localhost:5000) or [https://localhost:5001](https://localhost:5001)
+
+**Frontend Setup:**
+
+```bash
+# Navigate to frontend directory
+cd frontend
 
 # Install dependencies
 pnpm install
 
 # Set up environment variables
 cp .env.example .env.local
-# Edit .env.local with your configuration
-
-# Set up database
-pnpm prisma migrate dev
-pnpm prisma generate
-pnpm prisma db seed
+# Edit .env.local with API_URL pointing to backend
 
 # Run development server
 pnpm dev
